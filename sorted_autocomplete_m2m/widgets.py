@@ -1,6 +1,6 @@
 from itertools import chain
 from django import forms
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.forms import Media
 from django.template import Context
 from django.template.loader import get_template
@@ -32,7 +32,7 @@ class SuperSortWidget(SortedCheckboxSelectMultiple):
         else:
             self.choices.queryset = self.choices.queryset.filter(pk__in=value)
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         self.filter_unselected_choices(value)
         selected, unselected = self._render(name, value, attrs, choices)
         return get_template('sorted-autocomplete-m2m/m2m.html').render({
